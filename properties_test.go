@@ -11,7 +11,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"io/fs"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -231,7 +230,6 @@ func validatePropertiesFile(t *testing.T, fileName string, fileContent string) {
 	b := new(beanWithProperties)
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		glue.ResourceSource{
 			Name: "resources",
 			AssetNames: []string{ fileName },
@@ -331,8 +329,8 @@ func TestMergeProperties(t *testing.T) {
 	parent.Set("same", "parent")
 
 	child := glue.NewProperties()
-	child.Set("child", "child")
-	child.Set("same", "child")
+	child.Set("ctx", "ctx")
+	child.Set("same", "ctx")
 	child.Extend(parent)
 
 	require.Equal(t, "parent", parent.GetString("parent", ""))
@@ -340,8 +338,8 @@ func TestMergeProperties(t *testing.T) {
 	require.Equal(t, 1, len(parent.PropertyResolvers()))
 
 	require.Equal(t, "parent", child.GetString("parent", ""))
-	require.Equal(t, "child", child.GetString("child", ""))
-	require.Equal(t, "child", child.GetString("same", ""))
+	require.Equal(t, "ctx", child.GetString("ctx", ""))
+	require.Equal(t, "ctx", child.GetString("same", ""))
 	require.Equal(t, 2, len(child.PropertyResolvers()))
 
 	for _, r := range parent.PropertyResolvers() {

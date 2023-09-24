@@ -6,9 +6,8 @@
 package glue_test
 
 import (
-	"github.com/stretchr/testify/require"
 	"github.com/codeallergy/glue"
-	"log"
+	"github.com/stretchr/testify/require"
 	"testing"
 )
 
@@ -31,7 +30,6 @@ type cPlainBean struct {
 func TestPlainBeanCycle(t *testing.T) {
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		&aPlainBean{},
 		&bPlainBean{},
 		&cPlainBean{},
@@ -50,7 +48,6 @@ func TestSelfDepCycle(t *testing.T) {
 	self := &selfDepBean{}
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		self,
 	)
 	require.NoError(t, err)

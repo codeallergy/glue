@@ -6,9 +6,8 @@
 package glue_test
 
 import (
-	"github.com/stretchr/testify/require"
 	"github.com/codeallergy/glue"
-	"log"
+	"github.com/stretchr/testify/require"
 	"reflect"
 	"strings"
 	"testing"
@@ -99,7 +98,6 @@ func (t *repeatedFactoryBeanExample) Singleton() bool {
 func TestSingleFactoryBean(t *testing.T) {
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		&someService{testing: t},
 		&factoryBeanExample{testing: t},
 	)
@@ -118,7 +116,6 @@ func TestRepeatedFactoryBean(t *testing.T) {
 
 	app := &applicationContext{}
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		&someService{testing: t},
 		&factoryBeanExample{testing: t},
 		&repeatedFactoryBeanExample{testing: t},
@@ -135,7 +132,6 @@ func TestFactoryBean(t *testing.T) {
 
 	app := &applicationContext{}
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		app,
 		&factoryBeanExample{testing: t},
 		&someService{testing: t},
@@ -223,7 +219,6 @@ func (t *factoryBeanImpl) Singleton() bool {
 func TestFactoryInterfaceBean(t *testing.T) {
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		&factoryBeanImpl{testing: t},
 		&someServiceImpl{testing: t},
 		&struct {

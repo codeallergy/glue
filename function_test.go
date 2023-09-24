@@ -6,9 +6,8 @@
 package glue_test
 
 import (
-	"github.com/stretchr/testify/require"
 	"github.com/codeallergy/glue"
-	"log"
+	"github.com/stretchr/testify/require"
 	"reflect"
 	"testing"
 )
@@ -24,7 +23,6 @@ func TestPrimitiveFunctions(t *testing.T) {
 	holder := &functionHolder{}
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		holder,
 		func() int { return 123 },
 		func() []string { return []string{"a", "b"} },
@@ -79,7 +77,6 @@ func TestFunctions(t *testing.T) {
 	srv := &funcServiceImpl{}
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		clientBeans,
 		serverBeans,
 		srv,

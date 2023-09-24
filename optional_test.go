@@ -6,9 +6,8 @@
 package glue_test
 
 import (
-	"github.com/stretchr/testify/require"
 	"github.com/codeallergy/glue"
-	"log"
+	"github.com/stretchr/testify/require"
 	"reflect"
 	"testing"
 )
@@ -25,7 +24,6 @@ type beanB struct {
 func TestOptionalBeanByPointer(t *testing.T) {
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		&beanB{testing: t},
 	)
 	require.NoError(t, err)
@@ -60,7 +58,6 @@ func (t *beanBServiceImpl) B() {
 func TestOptionalBeanByInterface(t *testing.T) {
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		&beanBServiceImpl{testing: t},
 		&struct {
 			BeanBService BeanBService `inject`

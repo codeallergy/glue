@@ -9,7 +9,6 @@ import (
 	"errors"
 	"github.com/codeallergy/glue"
 	"github.com/stretchr/testify/require"
-	"log"
 	"net/http"
 	"strings"
 	"testing"
@@ -25,7 +24,6 @@ func (t fileSystemStub) Open(name string) (http.File, error) {
 func TestResourceMerge(t *testing.T) {
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		glue.ResourceSource{
 			Name: "resources",
 			AssetNames: []string{ "a.txt", "b/c.txt" },
@@ -66,7 +64,6 @@ func TestResourceMerge(t *testing.T) {
 func TestResourceMergeConflict(t *testing.T) {
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		glue.ResourceSource{
 			Name: "resources",
 			AssetNames: []string{ "a.txt", "b/c.txt" },
@@ -89,7 +86,6 @@ func TestResourceMergeConflict(t *testing.T) {
 func TestResourceParent(t *testing.T) {
 
 	parent, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		glue.ResourceSource{
 			Name: "resources",
 			AssetNames: []string{ "a.txt", "b/c.txt" },

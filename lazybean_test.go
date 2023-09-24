@@ -6,9 +6,8 @@
 package glue_test
 
 import (
-	"github.com/stretchr/testify/require"
 	"github.com/codeallergy/glue"
-	"log"
+	"github.com/stretchr/testify/require"
 	"reflect"
 	"testing"
 )
@@ -95,7 +94,6 @@ func (t *dosServiceImpl) Dos() {
 func TestLazyBeanInterface(t *testing.T) {
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		newUnoService(t),
 		newDosService(t),
 
@@ -173,7 +171,6 @@ func (t *unService) Un() {
 func TestLazyBeanPointers(t *testing.T) {
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		&zeroService{testing: t},
 		&unService{testing: t},
 	)

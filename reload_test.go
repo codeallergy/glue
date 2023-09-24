@@ -6,9 +6,8 @@
 package glue_test
 
 import (
-	"github.com/stretchr/testify/require"
 	"github.com/codeallergy/glue"
-	"log"
+	"github.com/stretchr/testify/require"
 	"reflect"
 	"testing"
 )
@@ -41,7 +40,6 @@ func TestBeanReload(t *testing.T) {
 
 	// initialization order
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		reBean,
 		tBean,
 	)

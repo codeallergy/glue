@@ -7,9 +7,8 @@ package glue_test
 
 import (
 	"errors"
-	"github.com/stretchr/testify/require"
 	"github.com/codeallergy/glue"
-	"log"
+	"github.com/stretchr/testify/require"
 	"reflect"
 	"strings"
 	"testing"
@@ -95,7 +94,6 @@ func (t *beanClient) Destroy() error {
 func TestPostConstruct(t *testing.T) {
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		&beanClient{testing: t},
 		&beanServer{},
 		/**
@@ -119,7 +117,6 @@ func TestPostConstruct(t *testing.T) {
 func TestPostConstructWithError(t *testing.T) {
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		&beanClient{testing: t},
 		&beanServer{throwError: true},
 		/**
@@ -182,7 +179,6 @@ func (t *cService) PostConstruct() error {
 func TestPostConstructCycle(t *testing.T) {
 
 	ctx, err := glue.New(
-		glue.Verbose{ Log: log.Default() },
 		&aService{testing: t},
 		&bService{testing: t},
 		&cService{testing: t},
