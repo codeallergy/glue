@@ -142,8 +142,10 @@ func createContext(parent *context, scan []interface{}) (ctx *context, err error
 				verbose.Printf("ChildContext %s\n", instance.Role())
 			}
 			ctx.children = append(ctx.children, instance)
-			// register interest
-			interfaces[ChildContextClass] = []*injection{}
+			// register interest by making a placeholder
+			if _, ok := interfaces[ChildContextClass]; !ok {
+				interfaces[ChildContextClass] = []*injection{}
+			}
 		case ResourceSource:
 			if verbose != nil {
 				verbose.Printf("ResourceSource %s, assets %+v\n", instance.Name, instance.AssetNames)
@@ -264,11 +266,18 @@ func createContext(parent *context, scan []interface{}) (ctx *context, err error
 						}
 						verbose.Printf("	Field %s%v %s\n", prefix, injectDef.fieldType, attrs)
 					}
+
 					switch injectDef.fieldType.Kind() {
 					case reflect.Ptr:
 						pointers[injectDef.fieldType] = append(pointers[injectDef.fieldType], &injection{objBean, value, injectDef})
 					case reflect.Interface:
+						if injectDef.fieldType == ChildContextClass {
+							println("BEFORE", injectDef.fieldType.String(), interfaces[injectDef.fieldType])
+						}
 						interfaces[injectDef.fieldType] = append(interfaces[injectDef.fieldType], &injection{objBean, value, injectDef})
+						if injectDef.fieldType == ChildContextClass {
+							println("AFTER", injectDef.fieldType.String(), interfaces[injectDef.fieldType])
+						}
 					case reflect.Func:
 						pointers[injectDef.fieldType] = append(pointers[injectDef.fieldType], &injection{objBean, value, injectDef})
 					default:
@@ -355,7 +364,7 @@ func createContext(parent *context, scan []interface{}) (ctx *context, err error
 	for requiredType, injects := range pointers {
 
 		if verbose != nil {
-			verbose.Println("Object", requiredType)
+			verbose.Println("Object", requiredType, len(injects))
 		}
 
 		direct := ctx.findObjectRecursive(requiredType)
@@ -404,7 +413,7 @@ func createContext(parent *context, scan []interface{}) (ctx *context, err error
 	for ifaceType, injects := range interfaces {
 
 		if verbose != nil {
-			verbose.Println("Interface", ifaceType)
+			verbose.Println("Interface", ifaceType, len(injects))
 		}
 
 		candidates := ctx.searchInterfaceCandidatesRecursive(ifaceType)
