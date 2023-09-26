@@ -29,7 +29,7 @@ require.Nil(t, err)
 defer ctx.Close()
 ```
 
-Gluten Framework does not support anonymous injection fields.
+Glue Framework does not support anonymous injection fields.
 
 Wrong:
 ```
@@ -47,12 +47,12 @@ type right struct {
 
 ### Types
 
-Gluten Framework supports following types for beans:
+Glue Framework supports following types for beans:
 * Pointer
 * Interface
 * Function
 
-Gluten Framework does not support Struct type as the bean instance type, in order to inject the object please use pointer on it. 
+Glue Framework does not support Struct type as the bean instance type, in order to inject the object please use pointer on it. 
 
 ### Function
 
@@ -157,7 +157,7 @@ func (t *component) BeanName() string {
 
 ### glue.OrderedBean
 
-For each bean that implements OrderedBean interface, Gluten Framework invokes method BeanOrder() to determining position of the bean inside collection at the time of injection to another bean or in case of runtime lookup request. 
+For each bean that implements OrderedBean interface, Glue Framework invokes method BeanOrder() to determining position of the bean inside collection at the time of injection to another bean or in case of runtime lookup request. 
 
 Example:
 ```
@@ -261,7 +261,7 @@ if t.Dependency != nil {
 
 ### Extend
 
-Gluten Framework has method Extend to create inherited contexts whereas parent sees only own beans, extended context sees parent and own glue.
+Glue Framework has method Extend to create inherited contexts whereas parent sees only own beans, extended context sees parent and own glue.
 The level of lookup determines the logic how deep we search beans in parent hierarchy. 
 
 Example:
