@@ -1,5 +1,7 @@
 # glue
 
+![build workflow](https://github.com/codeallergy/glue/actions/workflows/build.yaml/badge.svg)
+
 Dependency Injection Runtime Framework for Golang inspired by Spring Framework in Java.
 
 All injections happen on runtime and took O(n*m) complexity, where n - number of interfaces, m - number of services.
