@@ -273,6 +273,10 @@ func TestChildren(t *testing.T) {
 	require.Equal(t, 1, len(coreBean.Components))
 	require.Equal(t, "fromParent", coreBean.Components[0].Information())
 
+	// ChildContext should be found
+	list := parent.Bean(glue.ChildContextClass, glue.DefaultLevel)
+	require.Equal(t, 1, len(list))
+
 	// child context not yet created
 	require.Equal(t, 0, len(serviceBean.Elements2))
 
@@ -292,7 +296,7 @@ func TestChildren(t *testing.T) {
 	require.Equal(t, "fromChild", serviceBean.Components2[1].Information())
 
 	// interface injection test
-	list := child.Bean(ComponentClass, 0)
+	list = child.Bean(ComponentClass, 0)
 	require.Equal(t, 1, len(list))
 	require.Equal(t, "fromChild", list[0].Object().(Component).Information())
 
