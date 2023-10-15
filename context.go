@@ -271,13 +271,7 @@ func createContext(parent *context, scan []interface{}) (ctx *context, err error
 					case reflect.Ptr:
 						pointers[injectDef.fieldType] = append(pointers[injectDef.fieldType], &injection{objBean, value, injectDef})
 					case reflect.Interface:
-						if injectDef.fieldType == ChildContextClass {
-							println("BEFORE", injectDef.fieldType.String(), interfaces[injectDef.fieldType])
-						}
 						interfaces[injectDef.fieldType] = append(interfaces[injectDef.fieldType], &injection{objBean, value, injectDef})
-						if injectDef.fieldType == ChildContextClass {
-							println("AFTER", injectDef.fieldType.String(), interfaces[injectDef.fieldType])
-						}
 					case reflect.Func:
 						pointers[injectDef.fieldType] = append(pointers[injectDef.fieldType], &injection{objBean, value, injectDef})
 					default:
